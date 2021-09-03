@@ -10,7 +10,7 @@ jobs:
     name: Build and deploy doc-pages
     env:
       MY_SECRET   : ${{secrets.commit_secret}}
-      PUBLISH_DIR : .vuepress/dist
+      PUBLISH_DIR : src/.vuepress/dist
     runs-on: ubuntu-latest
     strategy:
       matrix:
