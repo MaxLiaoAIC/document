@@ -41,9 +41,9 @@ jobs:
         git add --all
         git commit -m "deploy to Github pages"
     - name: Push changes
-      uses: ad-m/github-push-action@master
+      uses: ad-m/github-push-action@main
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: 'doc-pages'
         force: true
-        directory: '.vuepress/dist'
+        directory: 'src/.vuepress/dist'
