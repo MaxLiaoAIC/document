@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>不連網安裝 docker Jenkins | 文件</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="education doc">
+    <meta name="viewport" content="width=device-width,user-scaleble=0,initial-scale=1.0,maximum-scale=1.0">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/document/assets/css/0.styles.ae117b60.css" as="style"><link rel="preload" href="/document/assets/js/app.fd97a7f3.js" as="script"><link rel="preload" href="/document/assets/js/2.9b0b50c8.js" as="script"><link rel="preload" href="/document/assets/js/3.b2498105.js" as="script"><link rel="prefetch" href="/document/assets/js/10.edff3f3c.js"><link rel="prefetch" href="/document/assets/js/11.0f3b05fd.js"><link rel="prefetch" href="/document/assets/js/12.a13d288a.js"><link rel="prefetch" href="/document/assets/js/13.7019d185.js"><link rel="prefetch" href="/document/assets/js/14.0fb5e5f5.js"><link rel="prefetch" href="/document/assets/js/15.244c473a.js"><link rel="prefetch" href="/document/assets/js/4.8d4a7860.js"><link rel="prefetch" href="/document/assets/js/5.d024174e.js"><link rel="prefetch" href="/document/assets/js/6.31cd761e.js"><link rel="prefetch" href="/document/assets/js/7.40ad0d83.js"><link rel="prefetch" href="/document/assets/js/8.5e5b8c58.js"><link rel="prefetch" href="/document/assets/js/9.c4d8b4b9.js">
+    <link rel="stylesheet" href="/document/assets/css/0.styles.ae117b60.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/document/" class="home-link router-link-active"><!----> <span class="site-name">文件</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/document/jenkins/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  Jenkins
+</a></div><div class="nav-item"><a href="/document/guide/" class="nav-link">
+  Guide
+</a></div><div class="nav-item"><a href="/document/config/" class="nav-link">
+  Config
+</a></div><div class="nav-item"><a href="https://v1.vuepress.vuejs.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  VuePress
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/document/jenkins/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  Jenkins
+</a></div><div class="nav-item"><a href="/document/guide/" class="nav-link">
+  Guide
+</a></div><div class="nav-item"><a href="/document/config/" class="nav-link">
+  Config
+</a></div><div class="nav-item"><a href="https://v1.vuepress.vuejs.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  VuePress
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="不連網安裝-docker-jenkins"><a href="#不連網安裝-docker-jenkins" class="header-anchor">#</a> 不連網安裝 docker Jenkins</h1> <p>＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿</p> <h3 id="image-jenkinsci-blueocean"><a href="#image-jenkinsci-blueocean" class="header-anchor">#</a> Image :jenkinsci/blueocean</h3> <h2 id="前置作業-準備-docker映像檔-跟-jenkins套件"><a href="#前置作業-準備-docker映像檔-跟-jenkins套件" class="header-anchor">#</a> 前置作業 - 準備 <strong>docker映像檔</strong> 跟 <strong>jenkins套件</strong></h2> <h3 id="docker-image-映像檔"><a href="#docker-image-映像檔" class="header-anchor">#</a> docker image 映像檔</h3> <ol><li><p>須先從可以連網的機器將 jenkins image 抓下來</p> <div class="language-console extra-class"><pre class="language-text"><code>$ docker pull jenkinsci/blueocean 
+</code></pre></div></li> <li><p>需將 docker image 檔案 export 出去, 才可裝到無法聯網的機器</p> <div class="language-console extra-class"><pre class="language-text"><code>$ docker save -o jenkins.tar jenkinsci/blueocean 
+</code></pre></div></li></ol> <h3 id="jenkins-套件"><a href="#jenkins-套件" class="header-anchor">#</a> jenkins 套件</h3> <ol><li>連進 jenkins 套件網址: <a href="https://updates.jenkins-ci.org/download/plugins/" target="_blank" rel="noopener noreferrer">套件網站<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li>找尋以下套件
+<ul><li>openJDK-native-plugin</li> <li>NodeJS</li> <li>Publish Over SSH</li></ul></li></ol> <h2 id="安裝jenkins"><a href="#安裝jenkins" class="header-anchor">#</a> 安裝Jenkins</h2> <ol><li><p>從檔案回復Image</p> <div class="language-console extra-class"><pre class="language-text"><code>$ docker load jenkins.tar
+</code></pre></div></li> <li><p>執行Docker Jenkins</p> <div class="language-console extra-class"><pre class="language-text"><code>$ docker run \ 
+  -d \
+  -u root \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v jenkins-data:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e JAVA_OPTS=-Duser.timezone=Asia/Taipei \
+  --name jenkins \
+  jenkinsci/blueocean
+</code></pre></div></li> <li><p>執行完後可以看到 Jenkins 已啟動</p></li> <li><p>連至 localhost:8080 顯示需要輸入密碼解鎖</p></li> <li><p>進入 Docker container，查看密碼</p> <div class="language-console extra-class"><pre class="language-text"><code>$ docker exec -it jenkins bash 
+$ cat /var/jenkins_home/secrets/initialAdminPassword
+</code></pre></div></li> <li><p>Customize Jenkins</p> <ul><li>選擇 Install suggested plugins</li></ul></li> <li><p>設定帳號
+<img src="/document/assets/img/setting_admin.fc3bd0ff.jpeg" alt="Setting admin"></p></li> <li><p>安裝Jenkins 外掛程式, 點選左邊側欄 管理 Jenkins --&gt; 管理外掛程式</p> <p><img src="/document/assets/img/pluging1.baa38808.png" alt="Setting admin"></p></li> <li><p>點選進階 --&gt; 選擇檔案 --&gt; 按『上傳』, 上傳先前準備的 jenkins 套件</p> <p><img src="/document/assets/img/pluging2.707c7086.png" alt="Setting admin"></p></li> <li><p>設定 Global Tool Configuration</p> <ol><li><p>新增JDK</p> <p><img src="/document/assets/img/jdk.122956e2.jpeg" alt="Setting admin"></p></li> <li><p>新增Gradle</p> <p><img src="/document/assets/img/gradle.cc7b2643.jpeg" alt="Setting admin"></p></li> <li><p>新增NodeJs</p> <p><img src="/document/assets/img/nodeJs.6e8861fc.jpeg" alt="Setting admin"></p></li></ol></li></ol></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/document/assets/js/app.fd97a7f3.js" defer></script><script src="/document/assets/js/2.9b0b50c8.js" defer></script><script src="/document/assets/js/3.b2498105.js" defer></script>
+  </body>
+</html>
