@@ -9,7 +9,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: '文件',
+  title: 'Advtek 教育訓練文件',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -38,36 +38,39 @@ module.exports = {
     docsDir: '',
     editLinkText: '',
     lastUpdated: false,
+    search: false,
     nav: [
       {
-        text: 'Jenkins',
-        link: '/jenkins/'
+        text: '一. 安裝開發工具',
+        link: '/env/'
       },
       {
-        text: 'Guide',
-        link: '/guide/',
+        text: '二. 建立前,後端專案',
+        link: '/project-structure/'
       },
       {
-        text: 'Config',
-        link: '/config/'
-      },
-      {
-        text: 'VuePress',
-        link: 'https://v1.vuepress.vuejs.org'
+        text: '三. 開發範例 ',
+        link: '/example/'
       }
     ],
     sidebar: {
-      '/guide/': [
+      '/env/': [
         {
-          title: 'Guide',
+          title: '一. 安裝開發工具',
           collapsable: false,
           children: [
             '',
-            'using-vue',
-            'new-page'
+            'gradle',
+            'nvm',
+            'vue-cli',
+            'quasar-cli',
+            'intellij',
+            'vscode',
+            'postman',
+            'git'
           ]
         }
-      ],
+      ]
     }
   },
 
