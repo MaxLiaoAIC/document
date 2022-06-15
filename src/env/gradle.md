@@ -4,7 +4,7 @@
 2. 建立安裝位置資料夾 ( 範例使用 : C:\var\gradle )
 3. 解壓縮檔案至放在該資料夾
     
-    ![unzip gradle](../asset/img/chapter1/gradle_1.png)
+    ![unzip gradle](../asset/img/env/gradle_1.png)
     
 4. 建立系統環境變數 -> 在設定查找 "系統環境"
 5. 點選 "環境變數"
@@ -15,7 +15,7 @@
     > 選用自訂路徑的人則填自訂路徑
     > 
     
-    ![](../asset/img/chapter1/gradle_2.png)
+    ![](../asset/img/env/gradle_2.png)
     
 9. 設定完後，測試是否安裝成功，開啟 cmd 輸入
     
@@ -23,5 +23,5 @@
     $ gradle --version
     ```
     
-    ![cmd gradle --version](../asset/img/chapter1/gradle_3.png)
+    ![cmd gradle --version](../asset/img/env/gradle_3.png)
     

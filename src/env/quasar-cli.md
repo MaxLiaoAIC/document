@@ -11,15 +11,15 @@
     
 2. 開啟 cmd 輸入指令
     
-    ![](../asset/img/chapter1/quasar_1.png)
+    ![](../asset/img/env/quasar_1.png)
     
 3. 安裝中
     
-    ![](../asset/img/chapter1/quasar_2.png)
+    ![](../asset/img/env/quasar_2.png)
     
 4. 安裝完成
     
-    ![](../asset/img/chapter1/quasar_3.png)
+    ![](../asset/img/env/quasar_3.png)
     
 5. 測試： 重新開啟 cmd ，輸入
     
@@ -27,9 +27,9 @@
     $ quasar
     ```
     
-    ![](../asset/img/chapter1/quasar_4.png)
+    ![](../asset/img/env/quasar_4.png)
     
 6. 測試完成，安裝成功
     
-    ![](../asset/img/chapter1/quasar_5.png)
+    ![](../asset/img/env/quasar_5.png)
     
