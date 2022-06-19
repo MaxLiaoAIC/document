@@ -13,23 +13,9 @@
     * Repository 負責處理對資料庫存取的方法
     * Service 負責架接 Controller 及 Repository，資料驗證及轉型等商業邏輯的應用
     * Controller 負責控管使用者資料的輸入輸出
-```graphviz
-digraph flow{
-    node[shape=rect fixedsize=true width=1]
-    rankdir=LR
-    edge[dir=both minlen=1]
-    subgraph cluster_0 {
-        label="spring boot"
-        controller
-        service
-        repository
-    }
-    user->controller
-    controller->service
-    service->repository
-    repository->database[label="entity"]
-}
-```
+
+   ![](../asset/img/example/001.png)
+
 1. 以 Employees 資料表為範例，在 server/src/main/java/com/aic/edudemo 下
     * 建立 domain 資料夾，在 domain 建立 Employee.java
     * 建立 repository 資料夾，在 repository 建立 EmployeeRepository.java
@@ -372,22 +358,8 @@ digraph flow{
 
 ## 透過 Vue.js 專案讓資料從後端顯示到瀏覽器
 
-```graphviz
+![](../asset/img/example/001.png)
 
-digraph server_database {
-    rankdir=LR
-    node[shape=rect fixedsize=true width=1.5 height=1]
-    splines=false
-    user
-    server[label="Vue.js Project\non Node.js server"]
-    database[label="spring boot\nserver"]
-    user -> server[label="http request"]
-    server -> user[label="http response"]
-    server->database[label="axios\najax solution"]
-    database-> server
-}
-
-```
 * 接下來透過 Vue.js 專案開發瀏覽器所需要的畫面
     ![](https://i.imgur.com/H13wM2Y.png)
 
@@ -550,7 +522,7 @@ Vue.js API 相關文件
     ```
 1. 接著更改 template，加入 q-table
     * 使用冒號 : 的語法是 Vue 的 v-bind 中的簡易版語法
-        * :data 對應的是表單資料，填入 employees
+        * :rows 對應的是表單資料，填入 employees
         * :columns 對應的是表單欄位設定，先填入 columns 下一步在設定
     ```html
     ...
@@ -758,23 +730,7 @@ Vue.js API 相關文件
 #### Spring Boot: VM 的使用
 * 當查詢用的格式跟 Entity 格式有所出入時，可建立 VM 的 java bean 當作存放容器
 * 以下用 EmployeeRequestVM 作為範例
-```graphviz
-digraph flow{
-    node[shape=rect fixedsize=true width=1]
-    rankdir=LR
-    edge[dir=both minlen=1]
-    subgraph cluster_0 {
-        label="spring boot"
-        controller
-        service
-        repository
-    }
-    user->controller[label="vm"]
-    controller->service
-    service->repository
-    repository->database[label="entity"]
-}
-```
+  ![](../asset/img/example/003.png)
 * 在 src/main/java/com/aic/edudemo/web/vm 下建立 EmployeeRequestVM.java
     * @JsonSetter(nulls=Nulls.SKIP) 若該屬性為 null 則跳過轉換，因此不會覆寫預設值
     * @DateTimeFormate(iso=ISO.DATE) 表示接受 yyyy-MM-dd 的日期格式
@@ -868,6 +824,40 @@ digraph flow{
     
     }
     ```
+    *以下採用nativeSQL寫法(專案中較為常用)
+   ```java
+   @Query(nativeQuery = true,  
+  value = "Select * From EMPLOYEES e" +  
+        " Where Upper(e.last_name) like Upper(:lastname)" +  
+        " And Upper(e.first_Name) Like Upper(:firstname)" +  
+        " And ( e.email = :email or :email is null )" +  
+        " And ( e.phone_Number = :phoneNumber or :phoneNumber is null )" +  
+        " And ( e.salary Between :salaryFrom And :salaryTo )" +  
+        " And ( e.hire_Date Between :hireDateFrom And :hireDateTo )" +  
+        " And ( e.job_Id = :jobId or :jobId is null )" +  
+        " And ( :size = 0 or e.department_Id IN :departmentIds )",  
+  countQuery = "Select count(*) From EMPLOYEES e" +  
+                " Where Upper(e.last_name) like Upper(:lastname)" +  
+                " And Upper(e.first_Name) Like Upper(:firstname)" +  
+                " And ( e.email = :email or :email is null )" +  
+                " And ( e.phone_Number = :phoneNumber or :phoneNumber is null )" +  
+                " And ( e.salary Between :salaryFrom And :salaryTo )" +  
+                " And ( e.hire_Date Between :hireDateFrom And :hireDateTo )" +  
+                " And ( e.job_Id = :jobId or :jobId is null )" +  
+                " And ( :size = 0 or e.department_Id IN (:departmentIds) )")  
+	Page<Employee> nativeFindEmployee(Pageable pageable,  
+	  @Param("lastname") String lastname,  
+	  @Param("firstname") String firstname,  
+	  @Param("email") String email,  
+	  @Param("phoneNumber") String phoneNumber,  
+	  @Param("salaryFrom") BigDecimal salaryForm,  
+	  @Param("salaryTo") BigDecimal salaryTo,  
+	  @Param("hireDateFrom")LocalDate hireDateFrom,  
+	  @Param("hireDateTo")LocalDate hireDateTo,  
+	  @Param("jobId")String jobId,  
+	  @Param("departmentIds") List<Integer> departmentIds,  
+	  @Param("size")Integer size);
+  
 #### Spring Boot: 在 Service 撰寫驗證
 * Repository 以及 Controller 無法處理的格式問題，在 Service 中解決 
 * 在 EmployeeService 中更改
@@ -1423,7 +1413,7 @@ digraph flow{
         <div class="col">
           <q-table
             title="Employee"
-            :data="employees"
+            :rows="employees"
             :columns="columns"
             :pagination.sync="pagination"
             @request="alterPagination"
@@ -1504,14 +1494,32 @@ digraph flow{
     
     }
     ```
-#### Vue.js: q-dialog 及 q-card 的使用
-* q-dialog 會跳出視窗，在該視窗中撰寫 q-card 元件供新增修改資料使用
+#### Vue.js: router 及 q-card 的使用
+* route 中的 push 方法可以移動畫面到指定的頁面，在該頁面中撰寫 q-card 元件供新增修改資料使用
+1. 在 pages 資料夾中新增 AddEmployeePage.vue
+2. 在 router/route.js 檔案中 新增路由資訊,  [ 將 props 傳遞給路由組件](https://router.vuejs.org/guide/essentials/passing-props.html)
+	```javascript=
+	{
+		path: "/demo",
+		name: "demo",
+		component: () =>  import("../pages/DemoPage.vue"),
+	},
+	{
+		path: "/add-new-employee",
+		name: "add-new-employee",
+		component:() => import("../pages/AddEmployeePage.vue"),
+		props: route => ({
+			jobs: route.params.jobs,
+			departments: route.params.departments
+		})
+	}
+	```
 
-1. 回到 Demo.vue 在 data 中新增需要的使用的物件
+3. 在 AddEmployeePage.vue中新增需要的使用的物件
     * saveEmployee 裝載 axios 使用的參數
     * editDialog 控制 q-dialog 顯示開關
     ```javascript=
-      let request = reactive({
+      const request = reactive({
          ...
         saveEmployee: {
            method: 'POST',
@@ -1519,10 +1527,8 @@ digraph flow{
            data: {}
          }
          ...
-      })
-      let editDialog = ref(false)
-    ```
-1. 接下來在 methods 中新增一個 callSaveEmployee 函示
+      })    ```
+5. 接下來新增 callSaveEmployee 及  函式
     * 這邊使用 alert 來做新增成功或失敗的訊息顯示
     ```javascript=
       ...
@@ -1534,12 +1540,25 @@ digraph flow{
             alert('Save Employee Faild')
             console.log(error)
           }
-          request.saveEmployee.data = {}
+          // 新增成功後導回 DemoPage.vue
+          router.push('/demo').then
         },
-        ...
+        
+		function  cancelAddEmployee() {
+		  request.saveEmployee.data = {}
+		  // 取消新增後導回 DemoPage.vue
+		  router.push('/demo').then
+		}
+      ...
     ```
-1. 原先的按鈕只有查詢的功能，在此新增另一個按鈕
-    * SAVE EMPLOYEES 按鈕點擊會將 q-dialog 打開
+6. 回到 DemoPage.vue 在上面的 import 中引進 useRouter  方法以利跳頁
+	```javascript
+	import { useRouter } from  'vue-router'
+	
+	const router = useRouter()
+	```
+7.  DemoPage.vue 原先的按鈕只有查詢的功能，在此新增另一個按鈕
+    * SAVE EMPLOYEES 按鈕點擊會將畫面 切換至 AddEmployeePage.vue
     ```html=
       <!-- 按鈕區塊 -->
       <div class="row q-col-gutter-xs">
@@ -1548,30 +1567,39 @@ digraph flow{
         </div>
         <!-- 請撰寫以下程式碼 -->
         <div class="col-12 col-md-2">
-          <q-btn label='SAVE EMPLOYEES' class="full-width" @click='editDialog=true'/>
+          <q-btn label='SAVE EMPLOYEES' class="full-width" @click='moveToAddEmployee'/>
         </div>
         <!-- 請撰寫以上程式碼 -->
       </div>
       <q-separator spaced />
     ```
-
-1. 最後來撰寫 q-dialog 以及 q-card 元件
-    * q-dialog 元件不會受排版影響
-    * 使用 v-model 綁定開關 editDialog
+8.  在 script 中新增 moveToAddEmployee 方法
+       ```javascript
+	    function moveToAddEmployee() {
+		    router.push({
+		       // name 當使用 props 傳遞資訊時，只能用 name 指定組件
+			    name: 'add-neww-employee',
+			    params: {
+				    // params 只能傳遞字串，所以將以取得的jobs和departments資料Stringify再傳送
+				    jobs: JSON.stringify(jobs.value),
+					departments: JSON.stringify(departments.value)
+				}
+			}).then
+	    }
+    ```
+9. 最後來撰寫 q-card 元件
     ```html=
     <template>
      <div class="q-pa-xl">
-    ...
-      <q-dialog v-model="editDialog" persistent>
-        <q-card style="width: 700px; max-width: 80vw;">
+    ...     
+       <q-card style="width: 700px; max-width: 80vw;">
         ............
-        </q-card>
-      </q-dialog>
+       </q-card>
     ...
      </div>
     </template>
     ```
-1. 在 q-card 分成 q-card-section 以及 q-card-action 的部分，共分三個部分撰寫
+10. 在 q-card 分成 q-card-section 以及 q-card-action 的部分，共分三個部分撰寫
     * 標題就單純顯示標題
     ```html=
     ...
@@ -1647,7 +1675,6 @@ digraph flow{
      ...
     ```
     * 功能按鈕包含了取消和確認新增修改的按鈕
-    * 兩個功能皆會關閉 q-dialog
     ```html=
     ...
       <!-- 功能按鈕 -->
@@ -1657,7 +1684,7 @@ digraph flow{
           label="Cancel"
           color="red"
           v-close-popup
-          @click="request.saveEmployee.data = {}"
+          @click="cancelAddEmployee"
         />
         <q-btn
           flat
@@ -1669,7 +1696,7 @@ digraph flow{
       </q-card-actions>
      ...
     ```
-1. 測試: 填入資料看看新增成功以及新增失敗的結果
+11. 測試: 填入資料看看新增成功以及新增失敗的結果
     * 成功
     ![](https://i.imgur.com/oEAJaLi.png)
     * 失敗
@@ -1778,7 +1805,7 @@ digraph flow{
     ```html=
       <q-table
         title="Employee"
-        :data="employees"
+        :rows="employees"
         :columns="columns"
         :pagination.sync="pagination"
         @request="alterPagination"
@@ -1809,11 +1836,11 @@ digraph flow{
           <q-btn label='SEARCH EMPLOYEES' class="full-width" @click='callGetEmployees'/>
         </div>
         <div class="col-12 col-md-2">
-          <q-btn label='SAVE EMPLOYEES' class="full-width" @click='editDialog=true'/>
+          <q-btn label='SAVE EMPLOYEES' class="full-width" @click='moveToAddEmployee'/>
         </div>
         <!-- 請撰寫以下片段 -->
         <div class="col-12 col-md-2">
-          <q-btn label='DELETE EMPLOYEES' class="full-width" @click='callDeleteEmployee' v-show="selected.length!=0"/>
+          <q-btn label='DELETE EMPLOYEES' class="full-width" @click='callDeleteEmployee' v-show="selected.length"/>
         </div>
         <!-- 請撰寫以上片段 -->
       </div>
@@ -1824,18 +1851,36 @@ digraph flow{
 
 ### 修改 Employee 資料
 * 修改 Employee 資料時，利用 selected 資料，將原先的資料代入欄位中
-* 修改時使用跟新增相同的跳出視窗，也使用相同的回呼 API
+* 修改時使用跳出視窗，並且使用AddEmployeePage相同的回呼 API, request 和 card 元件
 
 1. methods 中新增以下片段
     * editDialog 將彈跳視窗打開
     * 將 selected 第一項資料複製後，填入 axios 回呼的參數中
     ```javascript=
       ...
+	  let editDialog = ref(false)
+	  
       function updateOpenDialog () {
         editDialog.value = true
         request.saveEmployee.data = Object.assign({}, selected.value[0])
       },
       ...
+    ```
+1. 撰寫 q-dialog 以及 q-card 元件
+    * q-dialog 元件不會受排版影響
+    * 使用 v-model 綁定開關 editDialog
+    ```html=
+    <template>
+     <div class="q-pa-xl">
+    ...
+      <q-dialog v-model="editDialog" persistent>
+        <q-card style="width: 700px; max-width: 80vw;">
+        ............
+        </q-card>
+      </q-dialog>
+    ...
+     </div>
+    </template>
     ```
 2. 最後在新增按鈕，同刪除一樣是在有選定值時顯示
     * 使用 offset-md-4 將元件向右位移
@@ -1846,15 +1891,15 @@ digraph flow{
           <q-btn label='SEARCH EMPLOYEES' class="full-width" @click='callGetEmployees'/>
         </div>
         <div class="col-12 col-md-2">
-          <q-btn label='SAVE EMPLOYEES' class="full-width" @click='editDialog=true'/>
+          <q-btn label='SAVE EMPLOYEES' class="full-width" @click="moveToAddEmployee"/>
         </div>
         <!-- 請撰寫以下片段 -->
         <div class="col-12 col-md-2 offset-md-4">
-          <q-btn label='UPDATE EMPLOYEES' class="full-width" @click='updateOpenDialog' v-show="selected.length!=0"/>
+          <q-btn label='UPDATE EMPLOYEES' class="full-width" @click='updateOpenDialog' v-show="selected.length"/>
         </div>
         <!-- 請撰寫以上片段 -->
         <div class="col-12 col-md-2">
-          <q-btn label='DELETE EMPLOYEES' class="full-width" @click='callDeleteEmployee' v-show="selected.length!=0"/>
+          <q-btn label='DELETE EMPLOYEES' class="full-width" @click='callDeleteEmployee' v-show="selected.length"/>
         </div>
       </div>
       <q-separator spaced />

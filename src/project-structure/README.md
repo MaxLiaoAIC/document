@@ -6,29 +6,8 @@
 
 ## 目標如下圖的專案結構
 
-```graphviz
-    digraph EduDemo {
-    subgraph cluster_0 {
-        label="EduDemo"
-        node[shape=folder]
-        
-        subgraph cluster_1 {
-         label="Front-End\nVue Project"
-         graph[style=dotted]
-         n1[label="client"]
-        }
-        
-       subgraph cluster_2 {
-         label="Back-End\nSpring Boot Project"
-         graph[style=dotted]
-         n2[label="server"]
-       }     
-    }
-}
-```
+![](../asset/img/structure/001.png)
 
- 快速導覽:
- [ToC]
 
 ## 使用 IntelliJ 建立 EduDemo gradle 專案
 
@@ -44,6 +23,7 @@
 
     :::info
     **Gradle 專案架構簡介**
+    :::
     * build.gradle
         * 此 gradle 專案建置的設定檔，主要有函式庫的引入、引入時的設定以及任務的設置等
     * setting.gradle
@@ -274,27 +254,7 @@
     $ gradle bootRun
     ```
 ### 最後完成的 EduDemo 專案結構
-```graphviz
-    digraph EduDemo {
-    subgraph cluster_0 {
-        label="EduDemo"
-        node[shape=folder]
-        
-        subgraph cluster_1 {
-         label="Front-End\nVue Project"
-         graph[style=dotted]
-         n1[label="client"]
-        }
-        
-       subgraph cluster_2 {
-         label="Back-End\nSpring Boot Project"
-         graph[style=dotted]
-         n2[label="server"]
-       }
-    }
-}
-
-```
+![](../asset/img/structure/001.png)
 
 ```
 EduDemo
