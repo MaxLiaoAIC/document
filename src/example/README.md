@@ -65,7 +65,7 @@
 * 因此在 server/build.gradle 設定添加
     * build.gradle 負責專案中函式庫相依性的設定
     * 以下片段表示目的是從 jcenter 中導入 ojdbc8
-    ```groovy=
+    ```groovy
     ...
     repositories {
     ...
@@ -85,7 +85,7 @@
     * username 跟 passward，使用先前設定的 education 以及密碼 welcome1
     * url 格式會由資料庫廠商提供，每家資料庫有些許差異
     * driver-class-name 指的是先前導入的 oracle jdbc 函式庫名稱
-    ```yaml=
+    ```yaml
     spring:
       datasource:
         username: vuedemo
@@ -96,13 +96,11 @@
 
 1. 測試: 啟動 Spring boot server 專案
     * 在這邊若是資料設定錯誤，則不會正常啟動，請重新檢查設定
-    ```cmd
+    ```shell
     $ cd ${your_path}/EduDemo
     $ gradlew bootRun
     ``` 
-    :::info
-    範例完成參考: [EduDemo_datasource.zip](https://drive.google.com/file/d/1E8BdkNW09xp69JDzzzTWhdP5zm9nrYoM/view?usp=sharing)
-    :::
+
 ### 將 Employee.java 撰寫成 Entity 元件
 * Entity 是對照資料庫的資料表的 java bean
 * 建立 Repository 需要使用到 Entity
@@ -112,7 +110,7 @@
     * @Table 用以對應資料庫表單名稱
     * @Id 用以對應資料庫表單 primary key
     * @Data 會建立和覆寫 getter, setter, toString, hashCode, equals 等方法
-    ```java=
+    ```java
     package com.aic.edudemo.domain;
     
     // 請注意引用的部分
@@ -174,9 +172,7 @@
 	// );    
     ```
 3. 測試: 撰寫完成後啟動 server，若可順利啟動進行下一步驟
-    :::info
-    範例完成參考: [EduDemo_entity.zip](https://drive.google.com/file/d/19YOHvBbpqTvfhbOymVseb9s2zwYiFYlw/view?usp=sharing)
-    :::
+
 ### 撰寫 EmployeeRepository.java
 * Repository 負責處理對資料庫存取的方法
 * JpaRepository 來自 spring data jpa 函式庫，繼承他的介面會有基礎的 SQL 新刪修查方法
@@ -185,7 +181,7 @@
     * @Repository 告知框架註冊此 interface 為 Repository 元件
     * 此介面繼承 JpaRepository
     * JpaRepository 的泛型中填入 Entity 元件，該 Entity 中 @Id 標註屬性的物件類別
-    ```java=
+    ```java
     package com.aic.edudemo.repository;
     
     // 請注意引用的部分
@@ -204,7 +200,7 @@
     * @SpringBootTest 會在測試執行中建置並導入框架設定與元件
     * @Autowired 會將框架的註冊的元件引入
     * @Test 告知框架註冊此方法為 unit test 元件
-    ```java=
+    ```java
     package com.aic.edudemo;
     
     // 請注意引用的部分
@@ -238,7 +234,7 @@
     ```
 2. 在 src/main/resources/application.yml 中撰寫
     * 設定 JPA 將執行的 SQL 語法顯示在 console
-    ```yaml=
+    ```yaml
     spring:
       datasource:
         username: education
@@ -260,14 +256,12 @@
         ![](https://i.imgur.com/9UDHjOf.png)
     * 透過 gradle 執行
         * 執行以下指令，獲得測試檔案 TEST-com.aic.edudemo.ServerApplicationTests.xml
-        ```cmd
+        ```shell
         $ cd ${your_path}/EduDemo/server
         $ gradlew test --tests ServerApplicationTests.fetchAllEmployees
         ```
         * 測試結果在 server/build/test-results/test 資料夾中
-    :::info
-    範例完成參考: [EduDemo_repository.zip](https://drive.google.com/file/d/1mkJ-YSoID4aXNaPsygPrm8FhmrlJNQrF/view?usp=sharing)
-    :::
+
 
 ### 撰寫 EmployeeService.java
 * Service 負責架接 Controller 及 Repository，資料驗證及轉型等商業邏輯的應用
@@ -276,7 +270,7 @@
 1. 在 EmployeeService.java 中撰寫
     * @AllArgsConstructor 會建立一個包含所有屬性的建構子
     * @Service 告知框架註冊此類別為 Service 元件
-    ```java=
+    ```java
     package com.aic.edudemo.service;
     
     // 請注意引用的部分
@@ -300,9 +294,7 @@
     }
     // 請撰寫以上的部分.....
     ```
-    :::info
-    範例完成參考: [EduDemo_service.zip](https://drive.google.com/file/d/1WX5bQ-69ZKWUy9decN3DuwKYfzYGJxpw/view?usp=sharing)
-    :::
+
 
 ### 撰寫 EmployeeController.java
 * Controller 負責控管使用者資料的輸入輸出
@@ -313,7 +305,7 @@
     * @RequestMapping 設定路徑 
     * @GetMapping 設定路徑和 http 方法
     * 綜合以上兩個 Mapping 註冊了 /api/employees 路徑的 GET method
-    ```java=
+    ```java
     package com.aic.edudemo.web.controller;
     
     // 請注意引用的部分
@@ -341,7 +333,7 @@
     ```
 1. 測試: 接著啟動 server 後連線至 http://localhost:8080/api/employees
     
-    ```cmd
+    ```shell
     $ cd ${your_path}/EduDemo
     $ gradlew bootRun
     ```
@@ -351,9 +343,7 @@
     * 開啟 postman 訪問
     ![](https://i.imgur.com/QaIHKzH.png)
 
-    :::info
-    範例完成參考: [EduDemo_controller.zip](https://drive.google.com/file/d/1hXcpSr3qQ-gP37RilM16DkiH1tYBPKJp/view?usp=sharing)
-    :::
+
 
 
 ## 透過 Vue.js 專案讓資料從後端顯示到瀏覽器
@@ -366,7 +356,7 @@
 * 製作一個 Demo.vue 的元件，在網址切換到 /demo 的時候，會自動下載 Employees 的資料，並用 Table 格式顯示在畫面上
 
 
-:::info
+::: tip
 Quasar 提供了許多 UI 的套件，下面的官網有相關使用的介紹
 * https://quasar.dev/start/pick-quasar-flavour
 
@@ -374,7 +364,7 @@ Axios 的 Github，這裡可以查到相關的用法
 * https://github.com/axios/axios
 
 Vue.js API 相關文件
-* https://cn.vuejs.org/v2/api/
+* https://vuejs.org/api/
 :::
 
 
@@ -382,7 +372,7 @@ Vue.js API 相關文件
 * 為了避免啟動時違反跨域原則([CORS](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS))
 
 1. 在 client/quasar.config.js 中撰寫
-    ```javascript=
+    ```javascript
     module.exports = {
     ...
       devServer: {
@@ -402,11 +392,11 @@ Vue.js API 相關文件
 
 ### Demo.vue 的新增與路徑設置
 
-1. 目前在 src/router/index.js 中記載了目前對應到 views/App.vue 以及 views/Home.vue 的路徑配置，在這邊新增一個配給 Demo.vue 的路徑
+1. 目前在 src/router/route.js 中記載了目前對應到 layouts/MainLayout.vue 以及 pages/IndexPage.vue 的路徑配置，在這邊新增一個配給 Demo.vue 的路徑
 
-1. 在 src/router/index.js 中的 routes 物件中新增以下片段，
+1. 在 src/router/routes.js 中的 routes 物件中新增以下片段，
     * Vue Router 提供兩種 path 或 name 映射方式 
-     ```javascript=
+     ```javascript
      const routes = [
      ...
       {
@@ -418,14 +408,14 @@ Vue.js API 相關文件
      ]
 
      ```
-1. 接著在 src/views 資料夾下新增 Demo.vue 檔案
+1. 接著在 src/pages 資料夾下新增 Demo.vue 檔案
 
 1. 在 Demo.vue 寫入以下程式碼
     * template 區塊撰寫 html 相關語法
     * style 區塊撰寫 css 相關語法
     * script 區塊撰寫 javascript 相關語法
-    * {{text}} 是 Vue.js 中 v-text 的語法簡易型
-    ```vue=
+    * `{ { text } }` 是 Vue.js 中 v-text 的語法簡易型
+    ```vue
     <template>
       <div>
         <h1>demo</h1>
@@ -441,7 +431,7 @@ Vue.js API 相關文件
 	<style lang="scss" scoped></style>
 
     ```
-    :::info
+    ::: tip
      VS Code在安裝流程中裝載 Volar後，在 vue 檔案中輸入 vue 會有範本樣式可選擇
      ![](https://i.imgur.com/hVHVfMM.png)
     :::
@@ -456,14 +446,14 @@ Vue.js API 相關文件
 1. 接下來為了向 Spring Boot 取得 Employees 資料，在 Demo.vue 中撰寫相關的程式碼
 
 2. 首先是引入 axios 和 vue 生命週期方法，在 Demo.vue 增加以下片段
-    ```javascript=
+    ```javascript
     <script>
     import { api } from  'src/boot/axios'
     import { ref, onMounted } from  'vue'
     </script>
     ```
 3. 接下來定義 data，用來承接 Employees 資料
-     ```javascript=
+     ```javascript
     <script setup>
     import { api } from  'src/boot/axios'
     import { ref, onMounted } from  'vue'
@@ -473,10 +463,10 @@ Vue.js API 相關文件
     </script>
     ```
 4. 接著撰寫 onMounted 函式中撰寫 axios，onMounted 函式會在 Vue 元件建立時執行，axios 則會向後端 spring 請求資料, 這邊注意, 在使用ref時, 必須將資料指定到
-	```javascript=
+	```javascript
 	變數.value 
 	```
-    ```javascript=
+    ```javascript
     <script>
     <script setup>
     import { api } from  'src/boot/axios'
@@ -540,7 +530,7 @@ Vue.js API 相關文件
 1. 接下來綁定的 :columns 需要設定表單的欄位設定
     * label: 設定顯示在表單欄位的標頭名稱
     * field: 設定表單資料要如何從 :rows 物件中取得
-    ```javascript=
+    ```javascript
     ...
     data () {
         return {
@@ -564,9 +554,7 @@ Vue.js API 相關文件
     * 右下方有顯示資料比數的調整
     ![](https://i.imgur.com/hFkqcTB.png)
     
-    :::info
-    範例完成參考: [EduDemo_qtable.zip](https://drive.google.com/file/d/1EwBimeB9UIUwnLynffdjx241tC2tKWYY/view?usp=sharing)
-    :::
+
 
 ## 進階範例: 客製化 Employees 的查詢以及新增、修改、刪除
 
@@ -578,7 +566,7 @@ Vue.js API 相關文件
 
 1. 更改 EmployeeService
     * 將原先的方法加入 Pageable 參數，回傳物件 List 改為 Page
-    ```java=
+    ```java
     ...
     import org.springframework.data.domain.Page;
     import org.springframework.data.domain.Pageable;
@@ -594,7 +582,7 @@ Vue.js API 相關文件
 
 1. 更改 EmployeeController
     * 將原先的方法加入 Pageable 的參數
-    ```java=
+    ```java
     ...
     import org.springframework.data.domain.Pageable;
     ...
@@ -602,7 +590,7 @@ Vue.js API 相關文件
     ...
       @GetMapping("/employees")
       public Object findEmployees(Pageable pageable) {       
-          return this.employeeService.findAll();
+          return this.employeeService.findAll(pageable);
       }
     ...
     }
@@ -620,7 +608,7 @@ Vue.js API 相關文件
 
 1. 更改 Demo.vue
     * 為了正常顯示資料 reponse.data 更動為 reponse.data.content
-    ```javascript=
+    ```javascript
     ...
     onMounted(() => {
 		api.get('/employees').then(response => {
@@ -645,7 +633,7 @@ Vue.js API 相關文件
     ...
     ```
 4. 因為 pagination 以及 alterPagination 更動以下片段
-    ```javascript=
+    ```javascript
     <script setup>
     ...
     let pagination = ref({})
@@ -657,7 +645,12 @@ Vue.js API 相關文件
     ```
 4. 接下來更改 axios 回呼的方法，撰寫 callGetEmployees，在呼叫時會傳入依照 request.getEmployees 的內容請求
     * q-table 中的 page 則是從 1 開始
-    ```javascript=
+    ```javascript
+    // 上面 import 多引進 reactive
+    ...
+    import { ref, onMounted, reactive } from 'vue'
+    ...
+
     ...
     let request = reactive ({
       getEmployees: {
@@ -681,7 +674,7 @@ Vue.js API 相關文件
     }
     ```
 5. request.getEmployees.params 初始為空值，會等同請求 /api/employees，在畫面一開始時先呼叫取得前 20 筆資料，onMounted 更改如下
-    ```javascript=
+    ```javascript
     ...
     onMounted(() => {
 		callGetEmployees()
@@ -690,19 +683,19 @@ Vue.js API 相關文件
     ```
     
 6. 在上下頁觸發時，資料也要更動，所以最後在 alterPagination 中改成下列片段
-    ```javascript=
+    ```javascript
     ...
-    methods: {
-      async callGetEmployees () {
-        ...
-      },
-      alterPagination (args) {
-        // 觸發後改寫回呼參數
-        request.getEmployees.params.page = args.pagination.page - 1
-        request.getEmployees.params.size = args.pagination.rowsPerPage
-        callGetEmployees()
-      }
+
+    async callGetEmployees () {
+      ...
+    },
+    alterPagination (args) {
+      // 觸發後改寫回呼參數
+      request.getEmployees.params.page = args.pagination.page - 1
+      request.getEmployees.params.size = args.pagination.rowsPerPage
+      callGetEmployees()
     }
+
     ...
     ```
 
@@ -737,7 +730,7 @@ Vue.js API 相關文件
     * firstName 跟 lastName 預設值為配合 SQL Like 語法
     * hireDateFrom 跟 hireDateTo 預設值為配合 SQL Between 語法
     * salaryFrom 跟 salaryTo 預設值為配合 SQL Between 語法
-    ```java=
+    ```java
     package com.aic.edudemo.web.vm;
     
     // 請注意引用的部分
@@ -863,7 +856,7 @@ Vue.js API 相關文件
 * 在 EmployeeService 中更改
     * 新增 findEmployees 和 format 方法
     * lastName 或 firstName 存在時，添加 like 語句使用的 wildcard
-    ```java=
+    ```java
      ...
       public Page<Employee> findEmployees(Pageable pageable, EmployeeRequestVM employee) {
         this.format(employee);
@@ -883,7 +876,7 @@ Vue.js API 相關文件
     * 新增另一個 findEmployees 方法路徑使用原本的 /employees，並且接受 EmployeeRequestVM 參數
     * 像 /employees?lastName=Albert&firstName=Johnson 因為標註 @ModelAttribute，lastName 跟 firstName 會自動裝載到 EmployeeRequestVM 裡面
 
-    ```java=
+    ```java
     ...
       @GetMapping("/employees/all")
       public Object findEmployees(Pageable pageable) {
@@ -902,7 +895,7 @@ Vue.js API 相關文件
 * 以 Jobs 以及 Departments 兩張資料庫資料表作為範例
 
 1. 在 vm 資料夾下撰寫 LabelValue.java
-    ```java=
+    ```java
     package com.aic.edudemo.web.vm;
 
     import lombok.AllArgsConstructor;
@@ -926,7 +919,7 @@ Vue.js API 相關文件
     ```
 
 1. 建立 Department.java 為 Entity 元件
-    ```java=
+    ```java
     package com.aic.edudemo.domain;
     
     import javax.persistence.Entity;
@@ -952,7 +945,7 @@ Vue.js API 相關文件
     // 請撰寫以上部分.....
     ```
 1. 建立 Job.java 為 Entity 元件
-    ```java=
+    ```java
     package com.aic.edudemo.domain;
     
     import javax.persistence.Entity;
@@ -978,7 +971,7 @@ Vue.js API 相關文件
     // 請撰寫以上部分.....
     ```
 1. 建立 DepartmentRepository.java，只取用 departmentId, departmentName
-    ```java=
+    ```java
     package com.aic.edudemo.repository;
 
     // 請注意引入部分
@@ -999,7 +992,7 @@ Vue.js API 相關文件
     // 請撰寫以上部分.....
     ```
 1. 建立 JobRepository.java，只取用 jobId, jobTitle
-    ```java=
+    ```java
     package com.aic.edudemo.repository;
     
     // 請注意引入部分
@@ -1026,7 +1019,7 @@ Vue.js API 相關文件
     | Job       | jobTitle       | jobId        |
     | Deparment | departmentName | departmentId |
 
-    ```java=
+    ```java
     package com.aic.edudemo.service;
     
     // 請注意引入部分
@@ -1084,7 +1077,7 @@ Vue.js API 相關文件
 4. 建立 LabelValueController
     * 建立 /jobsLabelValues 取得 Jobs 資料
     * 建立 /departmentsLabelValues 取得 departments 資料
-    ```java=
+    ```java
     package com.aic.edudemo.web.controller;
     
     // 請注意引入部分
@@ -1125,7 +1118,7 @@ Vue.js API 相關文件
 1. 原先的顯示 Employees 表單上面新增兩個區塊，最上層留給功能按鈕做新刪修查，中間放查詢用的輸入，最下層則是原先的資料顯示，個別區塊之間已 q-separator 區隔
    * q-col-gutter-xs 控制各別 col 間的 pad 尺寸
    * col-12 col-md-2 控制 col 隨螢幕變動的尺寸
-   ```html=
+   ```html
    <template>
     <div class="q-pa-xl">
         <!-- 按鈕區塊 -->
@@ -1164,7 +1157,7 @@ Vue.js API 相關文件
    ```
 1. 加入一個 button ，將導入頁面就開始回呼 Employees 資料的行為，變更為點擊 button 才會進行回呼 Employees 資料
     * 在按鈕區塊中的 q-btn 在被 click 時會呼叫 callGetEmployees 方法
-    ```html=
+    ```html
     <!-- 按鈕區塊 -->
     <div class="row q-col-gutter-xs">
       <div class="col-12 col-md-2">
@@ -1174,7 +1167,7 @@ Vue.js API 相關文件
     <q-separator spaced />
     ```
    * 在 created 中註解掉 callGetEmployees，取消掉進入畫面時回呼行為
-   ```javascript=
+   ```javascript
    ...
    created () {
      // this.callGetEmployees()
@@ -1185,7 +1178,7 @@ Vue.js API 相關文件
 1. search button 完成後，接下來做 q-input 範例，對於 last name 進行篩選的查詢
    * 在輸入區塊中加入 q-input
    * 使用 v-model 綁定 input 與 data 中的屬性 request.getEmployees.params.lastName
-   ```html=
+   ```html
     <!-- 輸入區塊 -->
     <div class="row q-col-gutter-xs">
       <div class="col-12 col-md-6">
@@ -1200,7 +1193,7 @@ Vue.js API 相關文件
 
 1. 其餘的查詢篩選器，類似 Last Name 篩選器的做法，依序寫入輸入區塊中
     * lastName 跟 firstName 跟 phoneNumber 使用文字格式
-    ```html=
+    ```html
       <!-- 輸入區塊 -->
       <div class="row q-col-gutter-xs">
       ...
@@ -1219,7 +1212,7 @@ Vue.js API 相關文件
       <q-separator spaced />
     ```
     * email 使用 email 格式
-    ```html=
+    ```html
       <!-- 輸入區塊 -->
       <div class="row q-col-gutter-xs">
       ...
@@ -1233,7 +1226,7 @@ Vue.js API 相關文件
       <q-separator spaced />
     ```
     * hireDateFrom 跟 hireDateTo 使用日期格式
-    ```html=
+    ```html
       <!-- 輸入區塊 -->
       <div class="row q-col-gutter-xs">
       ...
@@ -1252,7 +1245,7 @@ Vue.js API 相關文件
       <q-separator spaced />
     ```
     * salaryFrom 跟 salaryTo 使用數字格式
-    ```html=
+    ```html
       <!-- 輸入區塊 -->
       <div class="row q-col-gutter-xs">
       ...
@@ -1271,7 +1264,7 @@ Vue.js API 相關文件
       <q-separator spaced />
     ```
     * jobId 使用 q-select 預設單選
-    ```html=
+    ```html
       <!-- 輸入區塊 -->
       <div class="row q-col-gutter-xs">
       ...
@@ -1287,7 +1280,7 @@ Vue.js API 相關文件
     * departmentIds 使用 q-select 更改成複選
     * axios 直接將陣列塞入 params 會有格式問題
     * 因此使用 @input 做另外的處理
-    ```html=
+    ```html
       <!-- 輸入區塊 -->
       <div class="row q-col-gutter-xs">
       ...
@@ -1313,7 +1306,7 @@ Vue.js API 相關文件
     * jobs 和 departments 負責承接 label value
     * getJobs 和 getDepartments 定義 axios 的參數
     * format.departmentIds 是為了 q-select 複選字串的處理
-    ```javascript=
+    ```javascript
       
     let request = reactive({
         ...
@@ -1337,7 +1330,7 @@ Vue.js API 相關文件
     ```
 2. 在 method 中新增回呼 jobs 跟 departments 方法，以及處理陣列問題的 formatDepartmentIds
     * formatDepartmentIds 會將陣列轉成字串或 null
-    ```javascript=
+    ```javascript
       
       ...
         async function callGetJobs () {
@@ -1356,7 +1349,7 @@ Vue.js API 相關文件
       
     ```
 3. 在按下搜尋員工按鈕時執行陣列轉字串，因此在 callGetEmployees() 中加上
-    ```javascript=
+    ```javascript
       async function callGetEmployees() {
 	      // 必須在發送api之前處理
 	      formatDepartmentIds()
@@ -1364,7 +1357,7 @@ Vue.js API 相關文件
       }
     ```
 3. 在載入畫面時抓取資料，因此在 create 中更改
-    ```javascript=
+    ```javascript
       onMounted(() =>  {
         // this.callGetEmployees()
         this.callGetJobs()
@@ -1381,7 +1374,7 @@ Vue.js API 相關文件
 1. 修改 columns 的格式，將原先的 ID 對應改掉
     * 註解掉的是原先的格式
     * name 的屬性是 q-table 做識別用的
-    ```javascript=
+    ```javascript
       ...
         columns: [
           ...
@@ -1395,14 +1388,13 @@ Vue.js API 相關文件
 1. 接著在 methods 中新增 getLabel 函示
     * 輸入查找的 label value 的 source 以及 id 查找 label
     * id 為 null 則回傳空字串
-    ```javascript=
-      methods: {
-        ...
-        getLabel (source, id) {
-          return !id ? '' : this[source].find(each => each.value.toString() === id.toString()).label
-        }
-        ...
+    ```javascript
+
+      getLabel (source, id) {
+        return !id ? '' : this[source].find(each => each.value.toString() === id.toString()).label
       }
+
+
     ```
 3. 在 q-table 中加入 template，並撰寫 q-td 指定要處理的部分
     * body-cell-[name] 對照 columns 中新增的 name
@@ -1451,7 +1443,7 @@ Vue.js API 相關文件
 * 在 Employee.java 中加入以下片段
     * @GeneratedValue 告知框架使用的哪一種產生 primary key 的方式
     * @SequenceGenerator 告知框架使用 Sequence 的設定資料
-    ```java=
+    ```java
     public class Employee {
      ...
       @Id
@@ -1465,7 +1457,7 @@ Vue.js API 相關文件
 #### Spring boot: 在 Service 引用 save 方法
 * JpaRepository 提供 save 的方法，會依照泛型指定的 Entity 類別進行**新增**和**修改**
 * 在 EmployeeService 中加入以下片段
-    ```java=
+    ```java
     public class EmployeeService {
       ...
       public Employee saveEmployee(Employee employee){
@@ -1478,7 +1470,7 @@ Vue.js API 相關文件
 * 在新增的時候一般使用 Post 方法，資料的值會透過 request body 傳輸
 
 * 在 EmployeeController 中更動
-    ```java=
+    ```java
     ...
     import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestBody;
@@ -1498,7 +1490,7 @@ Vue.js API 相關文件
 * route 中的 push 方法可以移動畫面到指定的頁面，在該頁面中撰寫 q-card 元件供新增修改資料使用
 1. 在 pages 資料夾中新增 AddEmployeePage.vue
 2. 在 router/route.js 檔案中 新增路由資訊,  [ 將 props 傳遞給路由組件](https://router.vuejs.org/guide/essentials/passing-props.html)
-	```javascript=
+	```javascript
 	{
 		path: "/demo",
 		name: "demo",
@@ -1518,7 +1510,7 @@ Vue.js API 相關文件
 3. 在 AddEmployeePage.vue中新增需要的使用的物件
     * saveEmployee 裝載 axios 使用的參數
     * editDialog 控制 q-dialog 顯示開關
-    ```javascript=
+    ```javascript
       const request = reactive({
          ...
         saveEmployee: {
@@ -1530,7 +1522,7 @@ Vue.js API 相關文件
       })    ```
 5. 接下來新增 callSaveEmployee 及  函式
     * 這邊使用 alert 來做新增成功或失敗的訊息顯示
-    ```javascript=
+    ```javascript
       ...
         async function callSaveEmployee () {
           try {
@@ -1559,7 +1551,7 @@ Vue.js API 相關文件
 	```
 7.  DemoPage.vue 原先的按鈕只有查詢的功能，在此新增另一個按鈕
     * SAVE EMPLOYEES 按鈕點擊會將畫面 切換至 AddEmployeePage.vue
-    ```html=
+    ```html
       <!-- 按鈕區塊 -->
       <div class="row q-col-gutter-xs">
         <div class="col-12 col-md-2">
@@ -1588,7 +1580,7 @@ Vue.js API 相關文件
 	    }
     ```
 9. 最後來撰寫 q-card 元件
-    ```html=
+    ```html
     <template>
      <div class="q-pa-xl">
     ...     
@@ -1601,7 +1593,7 @@ Vue.js API 相關文件
     ```
 10. 在 q-card 分成 q-card-section 以及 q-card-action 的部分，共分三個部分撰寫
     * 標題就單純顯示標題
-    ```html=
+    ```html
     ...
       <!-- 標題 -->
       <q-card-section>
@@ -1612,7 +1604,7 @@ Vue.js API 相關文件
     * 輸入欄位中包含新增 Employee 時需要的屬性
     * employeeId 的欄位由 Sequence 產生因此關閉輸入
     * 將新增修改用的資料綁定在 request.saveEmployee.data 物件
-    ```html=
+    ```html
     ...
       <!-- 輸入欄位 -->
       <q-card-section>
@@ -1675,7 +1667,7 @@ Vue.js API 相關文件
      ...
     ```
     * 功能按鈕包含了取消和確認新增修改的按鈕
-    ```html=
+    ```html
     ...
       <!-- 功能按鈕 -->
       <q-card-actions align="right">
@@ -1729,7 +1721,7 @@ Vue.js API 相關文件
 * JpaRepository 提供透過提供 primary key 刪除資料的方法
 * 在 EmployeeService 中更動以下片段
     * 使用 deleteById 刪除資料
-    ```java=
+    ```java
     public class EmployeeService {
     ...
       public void delete(Employee employee) {
@@ -1742,7 +1734,7 @@ Vue.js API 相關文件
 * 在刪除時透過 Post 方法，將指定 Id 的相關資料刪除
 * 在 EmployeeController 中更動以下片段
     * 將路徑 /employee/delete POST 配置成刪除 Employee API
-    ```java=
+    ```java
     public class EmployeeController {
     ...
 
@@ -1784,7 +1776,7 @@ Vue.js API 相關文件
 
 2. 在 methods 中更動以下片段
     * callDeleteEmployee 處理刪除 Employee 資料的回呼
-    ```javascript=
+    ```javascript
        ...
         async function callDeleteEmployee () {
           request.deleteEmployee.data.employeeId = selected.value[0].employeeId
@@ -1802,7 +1794,7 @@ Vue.js API 相關文件
     * row-key 填入欄位識別的ID值，因此使用 employeeId 最為合適
     * selection 可以填選單選和複選，選擇單選
     * selected.sync 做為 q-table 選定資料的綁定
-    ```html=
+    ```html
       <q-table
         title="Employee"
         :rows="employees"
@@ -1829,7 +1821,7 @@ Vue.js API 相關文件
 4. 最後添加觸發刪除的按鈕
     * v-show 可以透過 boolean 決定是否顯示元件
     * 當 selected 沒有資料時，將刪除按鈕改為不顯示
-    ```html=
+    ```html
       <!-- 按鈕區塊 -->
       <div class="row q-col-gutter-xs">
         <div class="col-12 col-md-2">
@@ -1856,7 +1848,7 @@ Vue.js API 相關文件
 1. methods 中新增以下片段
     * editDialog 將彈跳視窗打開
     * 將 selected 第一項資料複製後，填入 axios 回呼的參數中
-    ```javascript=
+    ```javascript
       ...
 	  let editDialog = ref(false)
 	  
@@ -1869,7 +1861,7 @@ Vue.js API 相關文件
 1. 撰寫 q-dialog 以及 q-card 元件
     * q-dialog 元件不會受排版影響
     * 使用 v-model 綁定開關 editDialog
-    ```html=
+    ```html
     <template>
      <div class="q-pa-xl">
     ...
